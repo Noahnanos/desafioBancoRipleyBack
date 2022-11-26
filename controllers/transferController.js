@@ -37,7 +37,8 @@ const getTransfer = async (request, response) => {
         const { user } = request.query;
 
         const transfersAccount = await tranfers.find({user}, {mount:1, date:1})
-            .populate('recipient', ['username', 'rut', 'bank', 'accountType']);;
+            .sort({"created_at": 1})
+            .populate('recipient', ['username', 'rut', 'bank', 'accountType']);
 
         response.status(200).send({status: 'ok', transfers: transfersAccount});
     } catch (error) {
